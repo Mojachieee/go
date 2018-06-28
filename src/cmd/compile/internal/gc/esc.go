@@ -834,7 +834,7 @@ opSwitch:
 			e.escassignSinkWhy(n, arg, "defer func arg")
 		}
 
-	case OPROC:
+	case OPROC, OEPROC:
 		// go f(x) - f and x escape
 		e.escassignSinkWhy(n, n.Left.Left, "go func")
 		e.escassignSinkWhy(n, n.Left.Right, "go func ...") // ODDDARG for call

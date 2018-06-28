@@ -951,7 +951,7 @@ func (n *Node) stmtfmt(s fmt.State, mode fmtMode) {
 	case ORETJMP:
 		mode.Fprintf(s, "retjmp %v", n.Sym)
 
-	case OPROC:
+	case OPROC, OEPROC:
 		mode.Fprintf(s, "go %v", n.Left)
 
 	case ODEFER:

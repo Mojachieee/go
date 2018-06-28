@@ -66,6 +66,7 @@ func initssaconfig() {
 	msanread = sysfunc("msanread")
 	msanwrite = sysfunc("msanwrite")
 	Newproc = sysfunc("newproc")
+	NewEproc = sysfunc("neweproc")
 	panicdivide = sysfunc("panicdivide")
 	panicdottypeE = sysfunc("panicdottypeE")
 	panicdottypeI = sysfunc("panicdottypeI")
@@ -717,6 +718,8 @@ func (s *state) stmt(n *Node) {
 		s.call(n.Left, callDefer)
 	case OPROC:
 		s.call(n.Left, callGo)
+	case OEPROC:
+		s.call(n.Left, callEGo)
 
 	case OAS2DOTTYPE:
 		res, resok := s.dottype(n.Rlist.First(), true)
@@ -2680,6 +2683,7 @@ const (
 	callNormal callKind = iota
 	callDefer
 	callGo
+	callEGo
 )
 
 type sfRtCallDef struct {
@@ -3574,6 +3578,8 @@ func (s *state) call(n *Node, k callKind) *ssa.Value {
 		call = s.newValue1A(ssa.OpStaticCall, types.TypeMem, Deferproc, s.mem())
 	case k == callGo:
 		call = s.newValue1A(ssa.OpStaticCall, types.TypeMem, Newproc, s.mem())
+	case k == callEGo:
+		call = s.newValue1A(ssa.OpStaticCall, types.TypeMem, NewEproc, s.mem())
 	case closure != nil:
 		// rawLoad because loading the code pointer from a
 		// closure is always safe, but IsSanitizerSafeAddr

@@ -2021,7 +2021,7 @@ func typecheck1(n *Node, top int) *Node {
 			checkdefergo(n)
 		}
 
-	case OPROC:
+	case OPROC, OEPROC:
 		ok |= Etop
 		n.Left = typecheck(n.Left, Etop|Erv)
 		checkdefergo(n)
@@ -2213,7 +2213,7 @@ func checksliceconst(lo *Node, hi *Node) bool {
 
 func checkdefergo(n *Node) {
 	what := "defer"
-	if n.Op == OPROC {
+	if n.Op == OPROC || n.Op == OEPROC {
 		what = "go"
 	}
 

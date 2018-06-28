@@ -374,6 +374,7 @@ func (v *hairyVisitor) visit(n *Node) bool {
 		OSELECT,
 		OTYPESW,
 		OPROC,
+		OEPROC,
 		ODEFER,
 		ODCLTYPE, // can't print yet
 		OBREAK,

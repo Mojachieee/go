@@ -2091,7 +2091,7 @@ func (p *parser) stmtOrNil() Stmt {
 		}
 		return s
 
-	case _Go, _Defer:
+	case _Go, _EGo, _Defer:
 		return p.callStmt()
 
 	case _Goto:
